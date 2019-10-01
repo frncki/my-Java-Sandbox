@@ -9,6 +9,30 @@ If there are some seeds with equal minimal maximums, you should output the seed 
 The input contains numbers A, B, N, K in a single line.
 
 You should output 2 numbers - a seed and it's maximum.
+
+Sample Input 1:
+0 100 5 1000
+
+Sample Output 1:
+18
+270
+
+
+Sample Input 2:
+0 100 1000 1000
+
+Sample Output 2:
+5
+993
+
+
+Sample Input 3:
+0 100 10000 1000
+
+Sample Output 3:
+0
+999
+
  */
 
 import java.util.*;
