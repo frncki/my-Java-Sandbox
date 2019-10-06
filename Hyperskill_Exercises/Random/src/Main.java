@@ -54,9 +54,9 @@ public class Main {
         int currentRandNum;
         int maxRandNumForSeed;
         int seedIndex;
+        int bestSeed = 0;
 
         int[][] everyOutput;
-        int[] bestOutput = new int[2];
 
         try {
             a = Integer.parseInt(userInput[0]);
@@ -72,11 +72,12 @@ public class Main {
         everyOutput = new int[2][numOfSeeds];
 
         for (int i = a; i <= b; i++) {
+            random.setSeed((long) i);
             maxRandNumForSeed = 0;
             seedIndex = i - a;
             for (int j = 0; j < n; j++) {
                 currentRandNum = random.nextInt(k);
-                if(currentRandNum > maxRandNumForSeed) {
+                if (currentRandNum > maxRandNumForSeed) {
                     maxRandNumForSeed = currentRandNum; // it works! and I figured it out by myself xd <3
                 }
             }
@@ -84,14 +85,54 @@ public class Main {
             everyOutput[1][seedIndex] = maxRandNumForSeed; //maximum for that seed
         }
 
-        for (int i = 0; i < numOfSeeds - 1; i++) {
-            if(everyOutput[1][i] <= everyOutput[1][i + 1]) {
-                bestOutput[0] = everyOutput[0][i];
-                bestOutput[1] = everyOutput[1][i];
+        for (int i = 0; i < numOfSeeds; i++) {
+            if (everyOutput[1][i] < k) {
+                k = everyOutput[1][i];
+                bestSeed = everyOutput[0][i];
+
             }
         }
 
-        System.out.println(bestOutput[0]);
-        System.out.println(bestOutput[1]);
+        System.out.println(bestSeed);
+        System.out.println(k);
     }
 }
+
+/*
+JetBrains code
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int a = scanner.nextInt();
+        int b = scanner.nextInt();
+        int n = scanner.nextInt();
+        int k = scanner.nextInt();
+
+        int seedMin = a;
+        Integer max = null;
+
+        for (int seed = a; seed <= b; seed++) {
+            Integer curMax = null;
+            Random random = new Random(seed);
+
+            for (int i = 0; i < n; i++) {
+                int nextVal = random.nextInt(k);
+                if (curMax == null || nextVal > curMax) {
+                    curMax = nextVal;
+                }
+            }
+
+            if (max == null || curMax < max) {
+                max = curMax;
+                seedMin = seed;
+            }
+        }
+
+        System.out.println(seedMin);
+        System.out.println(max);
+    }
+}
+ */
