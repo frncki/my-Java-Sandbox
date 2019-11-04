@@ -8,10 +8,10 @@ class Cell {
     private Color color;
     private ArrayList<Color> colors;
 
-    Cell(int xPosition, int yPosistion, int radius, int xVelocity, int yVelocity) {
+    Cell(int xPosition, int yPosition, int radius, int xVelocity, int yVelocity) {
         r = radius;
-        xPos = xPosition - (r/2);
-        yPos = yPosistion - (r/2);
+        xPos = xPosition;
+        yPos = yPosition;
         vx = xVelocity;
         vy = yVelocity;
         colors = new ArrayList<>();
@@ -23,18 +23,32 @@ class Cell {
         return 1;
     }
 
+    int getX() {return xPos;}
+
+    int getY() {return yPos;}
+
+    int getR() {return r;}
+
     void paint(Graphics g) {
         g.setColor(color);
-        g.fillOval(xPos, yPos, r, r);
+        g.fillOval(xPos - r, yPos - r, 2*r, 2*r);
     }
 
-    void update() {
+    void grow(JPanel panel) {
+        if (!(xPos + r > panel.getWidth() - 2 || xPos - r < 2)) {
+            if (!(yPos + r > panel.getHeight() - 2 || yPos - r < 2)) {
+                r += 5;
+            }
+        }
+    }
+
+    void move() {
         xPos += vx;
         yPos += vy;
     }
 
     void bounce(JPanel panel) {
-        if (xPos + r > panel.getWidth() || xPos < 0) vx *= -1;
-        if (yPos + r > panel.getHeight() || yPos < 0) vy *= -1;
+        if (xPos + r > panel.getWidth() || xPos - r < 0) vx *= -1;
+        if (yPos + r > panel.getHeight() || yPos - r < 0) vy *= -1;
     }
 }
