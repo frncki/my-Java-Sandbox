@@ -1,12 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 
 public class MitosisPanel extends JPanel implements Runnable {
 
     private boolean active, grow;
-    private ArrayList<Cell> cells;
+    private List<Cell> cells;
 
     MitosisPanel() {
         this.setPreferredSize(new Dimension(1200, 1200));
@@ -22,19 +23,26 @@ public class MitosisPanel extends JPanel implements Runnable {
 
     void addCell(int x, int y) {
         int radius = 4;
-        //if(x < radius) x = radius/2;
-        //if(x > this.getWidth() - radius) x = this.getWidth() - radius/2;
-        //if(y < radius) y = radius/2;
-        //if(y > this.getHeight() - radius) y = this.getHeight() - radius/2;
+        if (x < radius) x = radius / 2;
+        if (x > this.getWidth() - radius) x = this.getWidth() - radius / 2;
+        if (y < radius) y = radius / 2;
+        if (y > this.getHeight() - radius) y = this.getHeight() - radius / 2;
         System.out.println("x: " + x + " y: " + y);
         cells.add(new Cell(x, y, radius, randomSpeed(3), randomSpeed(3)));
     }
 
     void splitCell(Cell cell) {
         System.out.println("Splitin");
+        int xPos = cell.getX();
+        int yPos = cell.getY();
+        int radius = cell.getR() / 2;
+        cells.remove(cell);
+        cells.add(new Cell(xPos - radius, yPos - radius, radius, randomSpeed(5), randomSpeed(5)));
+        cells.add(new Cell(xPos + radius, yPos + radius, radius, randomSpeed(5), randomSpeed(5)));
+
     }
 
-    ArrayList<Cell> getCells() {
+    List<Cell> getCells() {
         return cells;
     }
 
@@ -49,7 +57,7 @@ public class MitosisPanel extends JPanel implements Runnable {
 
     private int randomSpeed(int max) {
         int direction = Math.random() < 0.5 ? -1 : 1;
-        return (int)((Math.random() * max) + 1) * direction;
+        return (int) ((Math.random() * max) + 1) * direction;
     }
 
 
@@ -58,7 +66,7 @@ public class MitosisPanel extends JPanel implements Runnable {
         while (active) {
 
             for (Cell cell : cells) {
-                if(grow) {
+                if (grow) {
                     cells.get(0).grow(this);
                 } else {
                     cell.move();

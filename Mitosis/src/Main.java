@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.*;
 
 public class Main {
@@ -58,8 +59,7 @@ public class Main {
     }
 
     private static void splitCells(MitosisPanel panel, int mouseX, int mouseY) {
-        ArrayList<Cell> cells = panel.getCells();
-        for(Cell cell : cells) {
+        for(Cell cell : panel.getCells()) {
             int xPos = cell.getX();
             int yPos = cell.getY();
             int r = cell.getR();
