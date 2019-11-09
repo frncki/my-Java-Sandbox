@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.concurrent.*;
 
 public class Main {
@@ -21,7 +22,7 @@ public class Main {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (mitosisPanel.getCells().size() > 0) {
-                    splitCells(mitosisPanel, e.getX(), e.getY());
+                    mitosisPanel.splitCells(e.getX(), e.getY());
                 }
             }
 
@@ -58,14 +59,7 @@ public class Main {
         f.setVisible(true);
     }
 
-    private static void splitCells(MitosisPanel panel, int mouseX, int mouseY) {
-        for(Cell cell : panel.getCells()) {
-            int xPos = cell.getX();
-            int yPos = cell.getY();
-            int r = cell.getR();
-            if(xPos - r < mouseX && xPos + r > mouseX && yPos - r < mouseY && yPos + r > mouseY) {
-                panel.splitCell(cell);
-            }
-        }
-    }
+//    private static void splitCells(MitosisPanel panel, int mouseX, int mouseY) {
+//
+//    }
 }

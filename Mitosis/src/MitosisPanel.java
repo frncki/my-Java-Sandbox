@@ -31,14 +31,21 @@ public class MitosisPanel extends JPanel implements Runnable {
         cells.add(new Cell(x, y, radius, randomSpeed(3), randomSpeed(3)));
     }
 
-    void splitCell(Cell cell) {
-        System.out.println("Splitin");
-        int xPos = cell.getX();
-        int yPos = cell.getY();
-        int radius = cell.getR() / 2;
-        cells.remove(cell);
-        cells.add(new Cell(xPos - radius, yPos - radius, radius, randomSpeed(5), randomSpeed(5)));
-        cells.add(new Cell(xPos + radius, yPos + radius, radius, randomSpeed(5), randomSpeed(5)));
+    void splitCells(int mouseX, int mouseY) {
+        ListIterator<Cell> cellIterator = cells.listIterator();
+        while (cellIterator.hasNext()) {
+            Cell cell = cellIterator.next();
+            int xPos = cell.getX();
+            int yPos = cell.getY();
+            int r = cell.getR();
+            if (xPos - r < mouseX && xPos + r > mouseX && yPos - r < mouseY && yPos + r > mouseY) {
+                System.out.println("Splitin");
+                int radius = r / 2;
+                cellIterator.remove();
+                cellIterator.add(new Cell(xPos - radius, yPos - radius, radius, randomSpeed(5), randomSpeed(5)));
+                cellIterator.add(new Cell(xPos + radius, yPos + radius, radius, randomSpeed(5), randomSpeed(5)));
+            }
+        }
 
     }
 
