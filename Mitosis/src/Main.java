@@ -9,7 +9,7 @@ import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame f = new JFrame("Prostokaty");
+        JFrame f = new JFrame("Mitosis");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         MitosisPanel mitosisPanel = new MitosisPanel();
 
@@ -21,9 +21,10 @@ public class Main {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (mitosisPanel.getCells().size() > 0) {
-                    mitosisPanel.splitCells(e.getX(), e.getY());
-                }
+//                if (mitosisPanel.getCells().size() > 0) {
+//                    System.out.println(e);
+//                    mitosisPanel.splitCells(e.getX(), e.getY());
+//                }
             }
 
             @Override
@@ -31,6 +32,10 @@ public class Main {
                 if (mitosisPanel.getCells().size() == 0) {
                     mitosisPanel.addCell(e.getX(), e.getY());
                     mitosisPanel.setGrow(true);
+                }
+                if (mitosisPanel.getCells().size() > 0) {
+                    System.out.println(e);
+                    mitosisPanel.splitCells(e.getX(), e.getY());
                 }
             }
 
