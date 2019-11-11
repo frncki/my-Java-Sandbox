@@ -21,20 +21,14 @@ public class Main {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-//                if (mitosisPanel.getCells().size() > 0) {
-//                    System.out.println(e);
-//                    mitosisPanel.splitCells(e.getX(), e.getY());
-//                }
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                if (mitosisPanel.getCells().size() == 0) {
+                if (mitosisPanel.getCells().isEmpty()) {
                     mitosisPanel.addCell(e.getX(), e.getY());
                     mitosisPanel.setGrow(true);
-                }
-                if (mitosisPanel.getCells().size() > 0) {
-                    System.out.println(e);
+                } else if (mitosisPanel.getCells().size() > 0) {
                     mitosisPanel.splitCells(e.getX(), e.getY());
                 }
             }

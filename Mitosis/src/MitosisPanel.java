@@ -39,7 +39,6 @@ public class MitosisPanel extends JPanel implements Runnable {
             int yPos = cell.getY();
             int r = cell.getR();
             if (xPos - r < mouseX && xPos + r > mouseX && yPos - r < mouseY && yPos + r > mouseY) {
-                System.out.println("Splitin");
                 int radius = r / 2;
                 cellIterator.remove();
                 cellIterator.add(new Cell(xPos - radius, yPos - radius, radius, randomSpeed(5), randomSpeed(5)));
@@ -78,6 +77,9 @@ public class MitosisPanel extends JPanel implements Runnable {
                 } else {
                     cell.move();
                     cell.bounce(this);
+//                    for (Cell otherCell : cells) {
+//                        cell.collide(otherCell);
+//                    }
                 }
 
                 repaint();

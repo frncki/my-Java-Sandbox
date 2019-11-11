@@ -23,11 +23,19 @@ class Cell {
         return 1;
     }
 
-    int getX() {return xPos;}
+    int getX() {return this.xPos;}
 
-    int getY() {return yPos;}
+    int getY() {return this.yPos;}
 
     int getR() {return r;}
+
+    void changeVx() {
+        this.vx *= -1;
+    }
+
+    void changeVy() {
+        this.vy *= -1;
+    }
 
     void paint(Graphics g) {
         g.setColor(color);
@@ -50,5 +58,18 @@ class Cell {
     void bounce(JPanel panel) {
         if (xPos + r > panel.getWidth() || xPos - r < 0) vx *= -1;
         if (yPos + r > panel.getHeight() || yPos - r < 0) vy *= -1;
+    }
+
+    void collide(Cell other) {
+        int dx = xPos - other.getX();
+        var dy = yPos - other.getY();
+        var dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < r + other.getR()) {
+            vx *= -1;
+            vy *= -1;
+            other.changeVx();
+            other.changeVy();
+        }
     }
 }
