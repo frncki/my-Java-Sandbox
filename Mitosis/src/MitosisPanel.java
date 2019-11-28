@@ -9,6 +9,7 @@ public class MitosisPanel extends JPanel implements Runnable {
     private boolean active, grow;
     private List<Cell> cells;
 
+
     MitosisPanel() {
         this.setPreferredSize(new Dimension(1200, 1200));
         this.setBackground(new Color(51, 51, 51));
@@ -39,10 +40,10 @@ public class MitosisPanel extends JPanel implements Runnable {
             int yPos = cell.getY();
             int r = cell.getR();
             if (xPos - r < mouseX && xPos + r > mouseX && yPos - r < mouseY && yPos + r > mouseY) {
-                int radius = r / 2;
+                int newR = (int)(r * 0.707);
                 cellIterator.remove();
-                cellIterator.add(new Cell(xPos - radius, yPos - radius, radius, randomSpeed(5), randomSpeed(5)));
-                cellIterator.add(new Cell(xPos + radius, yPos + radius, radius, randomSpeed(5), randomSpeed(5)));
+                cellIterator.add(new Cell(xPos - newR, yPos - newR, newR, randomSpeed(5), randomSpeed(5)));
+                cellIterator.add(new Cell(xPos + newR, yPos + newR, newR, randomSpeed(5), randomSpeed(5)));
             }
         }
 
@@ -77,16 +78,14 @@ public class MitosisPanel extends JPanel implements Runnable {
                 } else {
                     cell.move();
                     cell.bounce(this);
-//                    for (Cell otherCell : cells) {
-//                        cell.collide(otherCell);
-//                    }
+                    //for (Cell otherCell : cells) {cell.collide(otherCell);}
                 }
 
                 repaint();
             }
 
             try {
-                Thread.sleep(16);
+                Thread.sleep(16,667);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
