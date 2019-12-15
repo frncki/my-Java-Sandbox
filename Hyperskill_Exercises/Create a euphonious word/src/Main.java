@@ -2,67 +2,76 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        //char[] vowels = {'a', 'e', 'i', 'o', 'u', 'y'};
+        List<List<Character>> vowelsList = new ArrayList<>();
+        List<List<Character>> consonantsList = new ArrayList<>();
         int solutions = 0;
-        int vowelsFactor = 1;
-        int consonantsFactor = 1;
-        int vowelsCounter = 0;
-        int consonantsCounter = 0;
 
         Scanner scanner = new Scanner(System.in);
         char[] wordLetters = scanner.next().toCharArray();
-        boolean[] isVowel = new boolean[wordLetters.length];
 
         if (wordLetters.length < 3) {
             System.out.println(0);
             System.exit(2);
         }
 
-
+        List<Character> tempVowels = new ArrayList<>();
         for (int i = 0; i < wordLetters.length; i++) {
-            if (wordLetters[i] == 'a' || wordLetters[i] == 'e' || wordLetters[i] == 'i' || wordLetters[i] == 'o' || wordLetters[i] == 'u' || wordLetters[i] == 'y') {
-                isVowel[i] = true;
-            }
-            //System.out.print(isVowel[i]);
-        }
-        for (int i = 1; i < wordLetters.length; i++) {
-            if (isVowel[i - 1] && isVowel[i]) {
-                vowelsCounter++;
-            } else if (!isVowel[i - 1] && !isVowel[i]) {
-                consonantsCounter++;
+            if (checkForVowel(wordLetters, i)) {
+                tempVowels.add(wordLetters[i]);
+            } else {
+                vowelsList.add(tempVowels);
+                tempVowels = new ArrayList<>();
             }
         }
 
-        for (int i = 3; i < wordLetters.length; i++) {
-            if (!isVowel[i - 3] && isVowel[i - 2] && isVowel[i - 1] && isVowel[i]) {
-                vowelsFactor++;
-            } else if (isVowel[i - 2] && !isVowel[i - 2] && !isVowel[i - 1] && !isVowel[i]) {
-                consonantsFactor++;
+        List<Character> tempConsonants = new ArrayList<>();
+        for (int i = 0; i < wordLetters.length; i++) {
+            if (!checkForVowel(wordLetters, i)) {
+                tempConsonants.add(wordLetters[i]);
+            } else {
+                consonantsList.add(tempConsonants);
+                tempConsonants = new ArrayList<>();
             }
         }
 
-        vowelsCounter += vowelsFactor;
-        consonantsCounter += consonantsFactor;
-
-        System.out.println(vowelsFactor + " " + consonantsFactor + " " +vowelsCounter + " " + consonantsCounter);
-
-        if (vowelsCounter > 2 && vowelsCounter % 2 == 0) {
-            solutions += vowelsCounter / 2 - vowelsFactor;
-            //System.out.println("solutions1");
-        } else if (vowelsCounter > 2 && vowelsCounter % 2 == 1) {
-            solutions += vowelsCounter / 2;
-            //System.out.println("solutions2");
+        for (List<Character> vowels : vowelsList) {
+            System.out.println(vowels);
         }
-        if (consonantsCounter > 2 && consonantsCounter % 2 == 0) {
-            solutions += consonantsCounter / 2 - consonantsFactor;
-            //System.out.println("solutions3");
-        } else if (consonantsCounter > 2 && consonantsCounter % 2 == 1) {
-            solutions += consonantsCounter / 2;
-            //System.out.println("solutions4");
+        System.out.println("pupa");
+        for (List<Character> vowels : consonantsList) {
+            System.out.println(vowels);
         }
 
-        //qqqewwwerrrettteyyyeuuueiiieoooepppeaaaesssedddefffegggehhhejjjekkkelllezzzexxxecccevvvebbbennnemmm
+        for (List<Character> vowels : vowelsList) {
+            int vowelsInRow = vowels.size();
+            if(vowelsInRow > 2) {
+                if(vowelsInRow % 2 == 1) {
+                    solutions += vowelsInRow / 2;
+                } else {
+                    solutions += vowelsInRow / 2 - 1;
+                }
+            }
+        }
+
+        for (List<Character> consonants : consonantsList) {
+            int consonantsInRow = consonants.size();
+            if(consonantsInRow > 2) {
+                if(consonantsInRow % 2 == 1) {
+                    solutions += consonantsInRow / 2;
+                } else {
+                    solutions += consonantsInRow / 2 - 1;
+                }
+            }
+        }
+
         //eeeeeeeeeerrrreeeeeeee
+        //aaaaaweeeeewiiiiiwooooowuuuuuwyyyyyw
+        //qqqewwwerrrettteyyyeuuueiiieoooepppeaaaesssedddefffegggehhhejjjekkkelllezzzexxxecccevvvebbbennnemmm
+
         System.out.println(solutions);
+    }
+
+    private static boolean checkForVowel(char[] wordLetters, int i) {
+        return (wordLetters[i] == 'a' || wordLetters[i] == 'e' || wordLetters[i] == 'i' || wordLetters[i] == 'o' || wordLetters[i] == 'u' || wordLetters[i] == 'y');
     }
 }
